@@ -31,7 +31,7 @@ app.use('/playlist', playlistRouter);
 app.use('/user', userRouter)
 app.get('/refresh-token',Verify_JWT_TOKEN);
 
-app.get('/',(res,res)=>{
+app.get('/',(req,res)=>{
     res.status(200).json({
         success:true,
         message:'welcome my music player'
