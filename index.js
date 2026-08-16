@@ -24,13 +24,19 @@ app.use((req, res, next) => {
     next();
 });
 
- app.use('/album', albumRouter);
+app.use('/album', albumRouter);
 app.use('/artist', ArtistRouter);
 app.use('/song', SongRouter);
 app.use('/playlist', playlistRouter);
 app.use('/user', userRouter)
 app.get('/refresh-token',Verify_JWT_TOKEN);
 
+app.get('/',(res,res)=>{
+    res.status(200).json({
+        success:true,
+        message:'welcome my music player'
+    })
+})
 
 
 
