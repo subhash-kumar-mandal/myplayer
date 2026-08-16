@@ -8,7 +8,7 @@ const SongRouter = require('./src/Song/router.song');
 const playlistRouter = require('./src/Playlist/router.playlist');
 const userRouter = require('./src/user/router.user');
 const albumRouter = require('./src/album/router.album');
-const  Verify_JWT_TOKEN  = require('./middlewares/verifyjwt');
+const  Verify_JWT_TOKEN  = require('./middlewares/verifyJWT');
 
 
 app.use(cors({
