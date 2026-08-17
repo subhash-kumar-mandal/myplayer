@@ -38,7 +38,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (to, otp) => {
 
-  console.log("Sending OTP to:", to);
 
   const { data, error } = await resend.emails.send({
     from: "Music Player <onboarding@resend.dev>",
@@ -47,10 +46,10 @@ const sendEmail = async (to, otp) => {
     html: getOtpEmailHtml(otp)
   });
 
-  // if (error) {
-  //   console.error("RESEND ERROR:", error);
-  //   throw new Error(error.message || "Email sending failed");
-  // }
+  if (error) {
+    
+    throw new Error(error.message || "Email sending failed");
+  }
 
   // console.log("OTP email sent:", data);
 
