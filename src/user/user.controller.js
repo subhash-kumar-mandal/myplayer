@@ -321,6 +321,9 @@ async function Logout(req, res) {
 
 
 
+
+
+
 //  optmize this function  bad mein karte hai
 
 async function likeSong(req, res) {
@@ -424,6 +427,40 @@ async function likeSong(req, res) {
 
 
 
+async function Check_Email_Login(req, res) {
+
+    try {
+        const { email } = req.params;
+
+        const find_Email = await userSchema.findOne({
+            email: email
+        })
+
+
+        if (!find_Email) {
+            return res.status(500).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "successfully user find",
+
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+
+}
+
+
+
 
 
 
@@ -466,8 +503,90 @@ async function Check_Email_Give(req, res) {
         })
     }
 
-}
+};
 
+async function Check_Login(req, res) {
+
+    try {
+        const { email, password } = req.body;
+
+        const find_Email = await userSchema.findOne({
+            email: email
+        }).select("+password");
+
+
+
+
+        if (!find_Email) {
+            return res.status(500).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+
+
+
+        const passwordflag = await bcrypt.compare(password, find_Email.password);
+
+
+        console.log(passwordflag, email, password);
+        console.log(find_Email.password)
+        if (!passwordflag) {
+            return res.status(500).json({
+                success: false,
+                message: "Invaild credential"
+            })
+        };
+
+
+        const user = find_Email.toObject()
+        delete user.password;
+
+        const accessToken = jwt.sign(
+            {
+                _id: user._id,
+                role: user.role
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: '20s'
+            }
+        );
+        const refreshToken = jwt.sign(
+            {
+                _id: user._id,
+                role: user.role
+            },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+            }
+        );
+
+
+
+
+        find_Email.refreshToken = refreshToken;
+
+        await find_Email.save()
+
+
+        return res.cookie("refreshToken", refreshToken, options)
+            .status(200).json({
+                success: true,
+                message: 'OTP verified successfully',
+                user: user,
+                accessToken
+            });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+
+};
 
 
 
@@ -1184,4 +1303,4 @@ async function historyTrack(req, res, next) {
 
 
 
-module.exports = { Logout, historyTrack, refreshPage, SignUp, Check_Email_Give, UserCardsTops, likeSong };
+module.exports = { Check_Login, Check_Email_Login, Logout, historyTrack, refreshPage, SignUp, Check_Email_Give, UserCardsTops, likeSong };

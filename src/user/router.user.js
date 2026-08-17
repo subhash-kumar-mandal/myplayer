@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { refreshPage,  likeSong, UserCardsTops, Check_Email_Give, SignUp, historyTrack, Logout } = require('./user.controller');
+const { refreshPage,  likeSong, UserCardsTops, Check_Email_Give, SignUp, historyTrack, Logout, Check_Email_Login, Check_Login } = require('./user.controller');
 const userRouter = express.Router();
 const verifyAccessToken = require('../../middlewares/VerifyAccesstoken')
 const { sendOTP, verifyOtp } = require('../Otp/otp.controller');
@@ -16,6 +16,8 @@ userRouter.get('/email/:email', Check_Email_Give); // fronted check for signup e
 userRouter.post('/email/otp-sent', sendOTP);  // otp sent karna
 userRouter.post('/email/otp-verify', verifyOtp);  // otp verify karna
 userRouter.get('/refresh', refreshPage);  // refresh page karna
+userRouter.get('/password/:email',Check_Email_Login);
+userRouter.post('/password/login',Check_Login);
 userRouter.post('/logout',Logout)
 
 
