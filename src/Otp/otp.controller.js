@@ -19,8 +19,7 @@ async function sendOTP(req, res, next) {
     try {
         console.log("OTP CONTROLLER HIT");
 
-        console.log("BODY:", req.body);
-        console.log("EMAIL:", req.body?.email);
+
         const { email } = req.body;
 
         if (email === undefined || email === null || email.trim() === '') {
@@ -40,6 +39,9 @@ async function sendOTP(req, res, next) {
 
         const findOTP = await otpSchema.findOne({ email });
 
+        console.log("BODY:", req.body);
+        console.log("EMAIL:", req.body?.email);
+
         if (findOTP) {
 
             await sendEmail(email, findOTP.otp);
@@ -47,6 +49,8 @@ async function sendOTP(req, res, next) {
                 success: true,
                 message: 'otp sent Succsfully'
             })
+            console.log("BODY:", req.body);
+            console.log("EMAIL:", req.body?.email);
         };
 
 
@@ -61,6 +65,8 @@ async function sendOTP(req, res, next) {
         await otps.save();
 
         await sendEmail(email, OTP);
+        console.log("BODY:", req.body);
+        console.log("EMAIL:", req.body?.email);
 
         return res.status(200).json({
             success: true,
