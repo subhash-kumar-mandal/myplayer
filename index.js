@@ -3,11 +3,13 @@ const app = express();
 const DBJoin = require('./configs/db.config');
 const cors = require('cors')
 const cookies_parse = require("cookie-parser")
+
 const ArtistRouter = require('./src/Artist/router.artist');
 const SongRouter = require('./src/Song/router.song');
 const playlistRouter = require('./src/Playlist/router.playlist');
 const userRouter = require('./src/user/router.user');
 const albumRouter = require('./src/album/router.album');
+
 const  Verify_JWT_TOKEN  = require('./middlewares/verifyJWT');
 
 
@@ -55,8 +57,10 @@ DBJoin().then(() => {
 
 
     console.log("DB conneted succussfully")
-    app.listen(process.env.PORT || 3000 , () => {
-        console.log("server is starting ")
-    })
+    // app.listen(process.env.PORT || 3000 , () => {
+    //     console.log("server is starting ")
+    // })
 })
 
+
+module.exports = app
