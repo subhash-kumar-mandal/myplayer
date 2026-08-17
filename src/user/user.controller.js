@@ -13,10 +13,10 @@ const { default: mongoose } = require('mongoose');
 const followAlbumModel = require('../follow/albumfollow/followAlbum.model');
 const followArtistModel = require('../follow/artistfollow/followArtist.model');
 
-const options = {
+export const options = {
     httpOnly: true,
     secure: false,
-    sameSite: "strict",
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
