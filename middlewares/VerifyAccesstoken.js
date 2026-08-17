@@ -7,20 +7,26 @@ const customError = require("../src/helper/customError");
 async function verifyAccessToken(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
-            
+
+        console.log({
+            token: authHeader,
+            name: req.url,
+            work: 'check token'
+        })
+
         if (!authHeader?.startsWith("Bearer ")) {
             return next(new customError("Access token not found", 401));
         }
         const token = authHeader.split(" ")[1];
 
-       
+
 
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-       
+
         req.user = decoded;
 
-        
-       
+
+
         next();
 
     }

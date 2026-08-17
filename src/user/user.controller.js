@@ -202,8 +202,16 @@ async function SignUp(req, res, next) {
 
 
 async function refreshPage(req, res, next) {
+  
+    
+
     try {
         const refresh_Token = req.cookies.refreshToken;
+        console.log({
+        token:refresh_Token,
+        name:req.url,
+        work:'home data'
+    })
       
 
         if (!refresh_Token) {
