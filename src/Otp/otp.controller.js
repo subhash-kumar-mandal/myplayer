@@ -17,7 +17,10 @@ const options = {
 
 async function sendOTP(req, res, next) {
     try {
+        console.log("OTP CONTROLLER HIT");
 
+        console.log("BODY:", req.body);
+        console.log("EMAIL:", req.body?.email);
         const { email } = req.body;
 
         if (email === undefined || email === null || email.trim() === '') {
@@ -82,7 +85,7 @@ async function verifyOtp(req, res, next) {
             throw new customError("Invalid OTP", 400);
         }
 
-        
+
 
         const user = await userSchema.findOne({ email });
         if (!user) {
@@ -101,7 +104,7 @@ async function verifyOtp(req, res, next) {
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn:'20s'
+                expiresIn: '20s'
             }
         );
         const refreshToken = jwt.sign(
@@ -120,7 +123,7 @@ async function verifyOtp(req, res, next) {
 
         await user.save({ validateBeforeSave: false });
         await otpSchema.deleteOne({ email, otp });
-        
+
         return res.cookie("refreshToken", refreshToken, options)
             .status(200).json({
                 success: true,
