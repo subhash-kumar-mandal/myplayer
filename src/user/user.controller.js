@@ -529,8 +529,7 @@ async function Check_Login(req, res) {
         const passwordflag = await bcrypt.compare(password, find_Email.password);
 
 
-        console.log(passwordflag, email, password);
-        console.log(find_Email.password)
+        
         if (!passwordflag) {
             return res.status(500).json({
                 success: false,
@@ -549,7 +548,7 @@ async function Check_Login(req, res) {
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: process.env.ACCESS_TOKEN_SECRET
+                expiresIn: process.env.ACCESS_TOKEN_EXPIRY
             }
         );
         const refreshToken = jwt.sign(
