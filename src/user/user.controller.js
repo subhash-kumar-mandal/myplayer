@@ -207,12 +207,7 @@ async function refreshPage(req, res, next) {
 
     try {
         const refresh_Token = req.cookies.refreshToken;
-        console.log({
-        token:refresh_Token,
-        name:req.url,
-        work:'home data'
-    })
-      
+        
 
         if (!refresh_Token) {
             return next(new customError("Refresh token not found", 401));

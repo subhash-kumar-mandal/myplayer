@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const DBJoin = require('./configs/db.config');
@@ -57,10 +58,9 @@ DBJoin().then(() => {
 
 
     console.log("DB conneted succussfully")
-    // app.listen(process.env.PORT || 3000 , () => {
-    //     console.log("server is starting ")
-    // })
+    app.listen(process.env.PORT || 3000 , () => {
+        console.log("server is starting ")
+    })
 })
 
 
-module.exports = app

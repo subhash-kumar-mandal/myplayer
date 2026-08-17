@@ -8,11 +8,7 @@ async function verifyAccessToken(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
 
-        console.log({
-            token: authHeader,
-            name: req.url,
-            work: 'check token'
-        })
+       
 
         if (!authHeader?.startsWith("Bearer ")) {
             return next(new customError("Access token not found", 401));

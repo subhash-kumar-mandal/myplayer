@@ -17,12 +17,6 @@ async function Verify_JWT_TOKEN(req, res, next) {
     try {
 
 
-        const refresh_Token = req.cookies.refreshToken;
-        console.log({
-            token: refresh_Token,
-            name: req.url,
-            work: 'genreate token data'
-        })
 
         if (!refresh_Token) return next(new customError('Unauthentication', 401));
 

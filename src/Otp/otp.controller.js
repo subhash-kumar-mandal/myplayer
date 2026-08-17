@@ -39,7 +39,7 @@ async function sendOTP(req, res, next) {
         }
 
      ;
-        const findOTP = await otpSchema.findOne({ email }).exec();
+        const findOTP = await otpSchema.findOne({ email });
 
 
 
