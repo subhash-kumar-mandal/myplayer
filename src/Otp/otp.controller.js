@@ -31,18 +31,20 @@ async function sendOTP(req, res, next) {
         if (emailflag) {
             throw new customError("Invalid email format", 400);
         }
-
+        console.time("findOTP");
         const user = await userSchema.findOne({ email: email });
 
         if (!user) {
             throw new customError("User not found", 404);
         }
 
-        const findOTP = await otpSchema.findOne({ email });
+        console.time("findOTP");
 
-        console.log("BEFORE OTP FIND");
-        console.log("Mongo state:", mongoose.connection.readyState);
+        console.timeEnd("findOTP");
+        const findOTP = await otpSchema.findOne({ email }).exec();
+        console.timeEnd("findOTP");
 
+        console.log('findOTp result',findOTP)
 
         if (findOTP) {
 
