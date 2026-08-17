@@ -44,11 +44,11 @@ async function sendOTP(req, res, next) {
 
 
         if (findOTP) {
-            console.time("start otp");
+        
 
             await sendEmail(email, findOTP.otp);
 
-            console.timeEnd("sent otp");
+          
 
             return res.status(201).json({
                 success: true,
@@ -65,13 +65,13 @@ async function sendOTP(req, res, next) {
             { email, otp: OTP }
         );
 
-        await otps.save();
+       
 
-        console.time("start otp");
+        
 
         await sendEmail(email, OTP);
 
-        console.timeEnd("sent otp");
+        
 
         return res.status(200).json({
             success: true,
