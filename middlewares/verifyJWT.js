@@ -6,7 +6,7 @@ const customError = require('../src/helper/customError');
 
 const options = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000
 };
@@ -18,7 +18,8 @@ async function Verify_JWT_TOKEN(req, res, next) {
 
 
         const refresh_Token = req.cookies.refreshToken;
-
+         
+       
         if (!refresh_Token) return next(new customError('Unauthentication', 401));
 
 

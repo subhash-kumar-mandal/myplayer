@@ -9,7 +9,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const options = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000
 };
@@ -17,7 +17,7 @@ const options = {
 
 async function sendOTP(req, res, next) {
     try {
-        console.log("OTP CONTROLLER HIT");
+        
 
 
         const { email } = req.body;
@@ -39,8 +39,7 @@ async function sendOTP(req, res, next) {
 
         const findOTP = await otpSchema.findOne({ email });
 
-        console.log("BODY:", req.body);
-        console.log("EMAIL:", req.body?.email);
+       
 
         if (findOTP) {
 
@@ -49,8 +48,6 @@ async function sendOTP(req, res, next) {
                 success: true,
                 message: 'otp sent Succsfully'
             })
-            console.log("BODY:", req.body);
-            console.log("EMAIL:", req.body?.email);
         };
 
 
@@ -65,8 +62,7 @@ async function sendOTP(req, res, next) {
         await otps.save();
 
         await sendEmail(email, OTP);
-        console.log("BODY:", req.body);
-        console.log("EMAIL:", req.body?.email);
+      
 
         return res.status(200).json({
             success: true,

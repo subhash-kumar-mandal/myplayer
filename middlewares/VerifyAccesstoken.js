@@ -7,7 +7,7 @@ const customError = require("../src/helper/customError");
 async function verifyAccessToken(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
-        
+            
         if (!authHeader?.startsWith("Bearer ")) {
             return next(new customError("Access token not found", 401));
         }

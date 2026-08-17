@@ -15,7 +15,7 @@ const followArtistModel = require('../follow/artistfollow/followArtist.model');
 
 const options = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000
 };
@@ -204,6 +204,7 @@ async function SignUp(req, res, next) {
 async function refreshPage(req, res, next) {
     try {
         const refresh_Token = req.cookies.refreshToken;
+      
 
         if (!refresh_Token) {
             return next(new customError("Refresh token not found", 401));
