@@ -9,6 +9,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS
   }
 });
+console.log("EMAIL HANDLER LOADED");
 
 transporter.verify((error, success) => {
   if (error) {
@@ -18,7 +19,7 @@ transporter.verify((error, success) => {
   }
 });
 
-
+console.log("TRANSPORTER CREATED");
 
 const sendEmail = async (to, otp) => {
   await transporter.sendMail({
