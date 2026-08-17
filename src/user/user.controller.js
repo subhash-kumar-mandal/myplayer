@@ -549,7 +549,7 @@ async function Check_Login(req, res) {
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: '20s'
+                expiresIn: process.env.ACCESS_TOKEN_SECRET
             }
         );
         const refreshToken = jwt.sign(
