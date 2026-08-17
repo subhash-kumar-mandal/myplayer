@@ -47,12 +47,12 @@ const sendEmail = async (to, otp) => {
     html: getOtpEmailHtml(otp)
   });
 
-  if (error) {
-    console.error("RESEND ERROR:", error);
-    throw new Error(error.message || "Email sending failed");
-  }
+  // if (error) {
+  //   console.error("RESEND ERROR:", error);
+  //   throw new Error(error.message || "Email sending failed");
+  // }
 
-  console.log("OTP email sent:", data);
+  // console.log("OTP email sent:", data);
 
   return data;
 };

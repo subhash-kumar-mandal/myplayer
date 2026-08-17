@@ -202,12 +202,12 @@ async function SignUp(req, res, next) {
 
 
 async function refreshPage(req, res, next) {
-  
-    
+
+
 
     try {
         const refresh_Token = req.cookies.refreshToken;
-        
+
 
         if (!refresh_Token) {
             return next(new customError("Refresh token not found", 401));
@@ -285,6 +285,31 @@ async function refreshPage(req, res, next) {
         }
 
         next(err)
+    }
+};
+
+
+
+
+async function Logout(req, res) {
+    try {
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).status(200).json({
+            success: true,
+            message: "logout",
+        })
+    } catch (err) {
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).status(200).json({
+            success: false,
+            message: "logout",
+        })
     }
 }
 
@@ -813,7 +838,7 @@ async function UserCardsTops(req, res) {
                     type: "tracks",
                     data: JumpBack.map(item => item.songId)
                 },
-                topsCard: topsCards.map(item => item.songId).length<6?topCard:topsCards.map(item => item.songId),
+                topsCard: topsCards.map(item => item.songId).length < 6 ? topCard : topsCards.map(item => item.songId),
                 sections: [
 
                     {
@@ -975,7 +1000,7 @@ async function UserCardsTops(req, res) {
                 type: "tracks",
                 data: JumpBack.map(item => item.songId)
             },
-            topsCard: topCards.map(item => item.songId).length<6?topCard:topCards.map(item => item.songId),
+            topsCard: topCards.map(item => item.songId).length < 6 ? topCard : topCards.map(item => item.songId),
             sections: [
 
                 {
@@ -1159,4 +1184,4 @@ async function historyTrack(req, res, next) {
 
 
 
-module.exports = { historyTrack, refreshPage, SignUp, Check_Email_Give, UserCardsTops, likeSong };
+module.exports = { Logout, historyTrack, refreshPage, SignUp, Check_Email_Give, UserCardsTops, likeSong };

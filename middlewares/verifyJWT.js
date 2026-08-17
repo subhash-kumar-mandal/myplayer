@@ -89,8 +89,8 @@ async function Verify_JWT_TOKEN(req, res, next) {
         if (err.name === "TokenExpiredError") {
             return res.clearCookie("refreshToken", {
                 httpOnly: true,
-                secure: false,
-                sameSite: "strict"
+                secure: true,
+                sameSite: "none"
             }).status(401).json({
                 success: false,
                 message: "Refresh Token Expired",
@@ -101,8 +101,8 @@ async function Verify_JWT_TOKEN(req, res, next) {
         if (err.name === "JsonWebTokenError") {
             return res.clearCookie("refreshToken", {
                 httpOnly: true,
-                secure: false,
-                sameSite: "strict"
+                secure: true,
+                sameSite: "none"
             }).status(401).json({
                 success: false,
                 message: "Invalid Refresh Token",
