@@ -31,24 +31,25 @@ async function sendOTP(req, res, next) {
         if (emailflag) {
             throw new customError("Invalid email format", 400);
         }
-        console.time("findOTP");
+        
         const user = await userSchema.findOne({ email: email });
 
         if (!user) {
             throw new customError("User not found", 404);
         }
 
-        console.time("findOTP");
-
-        console.timeEnd("findOTP");
+     ;
         const findOTP = await otpSchema.findOne({ email }).exec();
-        console.timeEnd("findOTP");
 
-        console.log('findOTp result',findOTP)
+
 
         if (findOTP) {
+            console.time("start otp");
 
             await sendEmail(email, findOTP.otp);
+
+            console.timeEnd("sent otp");
+
             return res.status(201).json({
                 success: true,
                 message: 'otp sent Succsfully'
@@ -66,8 +67,11 @@ async function sendOTP(req, res, next) {
 
         await otps.save();
 
+        console.time("start otp");
+
         await sendEmail(email, OTP);
 
+        console.timeEnd("sent otp");
 
         return res.status(200).json({
             success: true,
