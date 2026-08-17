@@ -5,6 +5,7 @@ const customError = require("../helper/customError");
 const userSchema = require('../user/user.model');
 const sendEmail = require('../helper/emailhandler');
 const jwt = require('jsonwebtoken');
+const { default: mongoose } = require('mongoose');
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const options = {
@@ -17,7 +18,7 @@ const options = {
 
 async function sendOTP(req, res, next) {
     try {
-        
+
 
 
         const { email } = req.body;
@@ -39,7 +40,9 @@ async function sendOTP(req, res, next) {
 
         const findOTP = await otpSchema.findOne({ email });
 
-       
+        console.log("BEFORE OTP FIND");
+        console.log("Mongo state:", mongoose.connection.readyState);
+
 
         if (findOTP) {
 
@@ -62,7 +65,7 @@ async function sendOTP(req, res, next) {
         await otps.save();
 
         await sendEmail(email, OTP);
-      
+
 
         return res.status(200).json({
             success: true,
